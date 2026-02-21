@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 export interface Column<T> {
   key: string;
   label: string;
-  render?: (item: T) => React.ReactNode;
+  render?: (item: T, index?: number) => React.ReactNode;
 }
 
 interface DataTableProps<T> {
@@ -33,7 +33,7 @@ function DataTable<T extends { id: string }>({ columns, data, onRowClick }: Data
               </TableCell>
             </TableRow>
           ) : (
-            data.map(item => (
+            data.map((item, index) => (
               <TableRow
                 key={item.id}
                 onClick={() => onRowClick?.(item)}
@@ -41,7 +41,7 @@ function DataTable<T extends { id: string }>({ columns, data, onRowClick }: Data
               >
                 {columns.map(col => (
                   <TableCell key={col.key} className="text-sm">
-                    {col.render ? col.render(item) : (item as any)[col.key]}
+                    {col.render ? col.render(item, index) : (item as any)[col.key]}
                   </TableCell>
                 ))}
               </TableRow>

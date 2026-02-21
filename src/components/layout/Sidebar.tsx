@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, CalendarDays, Users, Stethoscope, Package,
@@ -7,6 +8,11 @@ import {
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
 import { cn } from '@/lib/utils';
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel,
+  AlertDialogContent, AlertDialogDescription, AlertDialogFooter,
+  AlertDialogHeader, AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
@@ -33,6 +39,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
   const location = useLocation();
   const { logout } = useAuth();
   const { crisisMode } = useApp();
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   return (
     <aside className={cn(
@@ -89,7 +96,7 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
       {/* Logout */}
       <div className="p-2 border-t border-border">
         <button
-          onClick={logout}
+          onClick={() => setLogoutOpen(true)}
           className={cn(
             "flex items-center gap-3 rounded-lg text-sm font-medium w-full transition-colors text-sidebar-foreground hover:bg-destructive/10 hover:text-destructive",
             collapsed ? "justify-center px-2 py-2.5" : "px-3 py-2.5"
@@ -99,6 +106,19 @@ const Sidebar = ({ collapsed }: SidebarProps) => {
           {!collapsed && <span>Logout</span>}
         </button>
       </div>
+
+      <AlertDialog open={logoutOpen} onOpenChange={setLogoutOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
+            <AlertDialogDescription>Are you sure you want to logout? You will need to sign in again.</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={logout} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">Logout</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </aside>
   );
 };

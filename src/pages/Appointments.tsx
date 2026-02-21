@@ -43,6 +43,7 @@ const Appointments = () => {
   };
 
   const columns: Column<Appointment>[] = [
+    { key: '#', label: '#', render: (_, i) => <span className="font-medium text-muted-foreground">{(i ?? 0) + 1}</span> },
     { key: 'patientName', label: 'Patient Name' },
     { key: 'date', label: 'Date & Time' },
     { key: 'doctor', label: 'Doctor' },
