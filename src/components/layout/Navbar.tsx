@@ -1,4 +1,5 @@
 import { Bell, Menu, Search, Sun, Moon } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { useApp } from '@/context/AppContext';
 import { useTheme } from '@/hooks/useTheme';
@@ -12,6 +13,7 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
   const { user } = useAuth();
   const { notifications } = useApp();
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
@@ -43,15 +45,15 @@ const Navbar = ({ onToggleSidebar }: NavbarProps) => {
           )}
         </button>
 
-        <div className="flex items-center gap-3">
+        <button onClick={() => navigate('/profile')} className="flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-muted transition-colors cursor-pointer">
           <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-semibold">
             {user?.name?.charAt(0) || 'A'}
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:block text-left">
             <p className="text-sm font-medium text-foreground leading-tight">{user?.name}</p>
             <p className="text-xs text-muted-foreground">{user?.role}</p>
           </div>
-        </div>
+        </button>
       </div>
     </header>
   );
