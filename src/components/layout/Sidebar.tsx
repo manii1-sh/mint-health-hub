@@ -18,7 +18,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
   { icon: CalendarDays, label: 'Appointments', path: '/appointments' },
   { icon: Users, label: 'Patients', path: '/patients' },
-  { icon: Stethoscope, label: 'Doctors', path: '/doctors' },
+  
   { icon: Package, label: 'Resources', path: '/resources' },
   { icon: AlertTriangle, label: 'Emergency Queue', path: '/emergency' },
   { icon: ShieldAlert, label: 'Crisis Panel', path: '/crisis' },
